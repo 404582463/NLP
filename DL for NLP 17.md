@@ -16,4 +16,12 @@ add attention to each sequence and use a integrate model to deal with them
 &nbsp;  
 ![image](https://user-images.githubusercontent.com/48316842/133384181-5f9ae4ab-3ab2-4843-a464-80691141a976.png)
 
-## POS(part-of-speech) Tagging
+## Preprocessing
+### POS(part-of-speech) Tagging
+preprocessing for down-stream task  
+Recently, powerful model like BERT has the ability of POS tagging to some extent. So this preprocessing is not always necessary.  
+
+### Word Segmentation
+for Chinese: binary classification to detemine if the character is the boundry or not  
+Similarily, model like BERT may have learned how to conduct word segmetation, so it is not necessary.
+
