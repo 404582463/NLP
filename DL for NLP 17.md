@@ -19,9 +19,53 @@ add attention to each sequence and use a integrate model to deal with them
 ## Preprocessing
 ### POS(part-of-speech) Tagging
 preprocessing for down-stream task  
-Recently, powerful model like BERT has the ability of POS tagging to some extent. So this preprocessing is not always necessary.  
+
 
 ### Word Segmentation
 for Chinese: binary classification to detemine if the character is the boundry or not  
-Similarily, model like BERT may have learned how to conduct word segmetation, so it is not necessary.
 
+
+### Parsing
+Constituency Parsing & Dependency Parsing  
+![image](https://user-images.githubusercontent.com/48316842/133440193-0af76051-bfa4-4e32-9a9d-e6d41f430d6b.png)
+
+### Coreference Resolution(指代消解)
+&nbsp;  
+
+In fact, powerful model like BERT may have learned the ability of POS tagging, word segmentation, and parsing to some extent. So these preprocessings are not always necessary.
+
+## Down-stream tasks
+### Summarization
+Extractive summarization  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Input -> sequence(text)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Output -> class of each token(sentence in this case)  
+Abstractive summarization
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Input -> sequence(text)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Output -> sequence(copy is encouraged in this case)  
+
+### Machine Translation
+Input -> sequence(text/speech)
+Output -> sequence(text/speech)  
+**Unsupervised machine translation** is a critical research direction because gather data for over 7000 language is not a easy task.  
+  
+### Grammar Error Correction
+Input -> sequence  
+Output -> sequence/ class of each token
+copy is encouraged  
+
+### Sentiment Classification
+Input -> sequence  
+Output -> class  
+
+### Stance Detection
+4 Classes: **Support, Denying, Querying, Commenting (SDQC)**  
+
+### Veracity Prediction(真实性预测)
+post + replies + Wikipedia + ... -> model -> True/False
+
+### Natural Language Inference(NLI)
+Input -> two sequence (premis and hypothesis) 
+Output -> one class  
+premise + hypothesis -> model -> contradiction(矛盾)/entailment(蕴含)/neutral(中立)
+
+### Search Engine
