@@ -78,5 +78,10 @@ To filter out irrelevant documents is necessary
 Extractive QA is a reletively mature technique.
 
 ### Dialogue
-chatting and task-oriented model
+chatting and task-oriented model  
+chit-chatting  
+input + historical conversation + personality +empathy + knowledge + ... -> model => output
+task-orientend  
+1. NLG(action defination) model is usually deployed as an independent model  
+2. Core model(policy and state tracker)
 
