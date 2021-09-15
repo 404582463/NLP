@@ -1,0 +1,3 @@
+# [DLHLP 2020] Deep Learning for Human Language Processing (17/32)
+Youtube channel for [DLHLP 2020] Deep Learning for Human Language Processing: [Here](https://www.youtube.com/watch?v=tFBrqPPxWzE&list=PLJV_el3uVTsO07RpBYFsXg-bN5Lu0nhdG&index=17)  
+Slides can be obtained [Here](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqazZOVnBkZkdCUTkxSFdha0dTaVdmLThZbUlhZ3xBQ3Jtc0tuMGFoVkVVZlBpakJYSnZWaTl2ZS1OSTZwQnVkN2Iza2lyY0Q0UXRyb1FuTmh3ZktPWFBKOVZITndjd1lNQ1ZSMkdRTkF0ZEM3dDEwWkl6bUNGRlZkY284RUdZdnVNSDRnYll1bHNTeFhQbmR1SGhEQQ&q=http%3A%2F%2Fspeech.ee.ntu.edu.tw%2F%7Etlkagk%2Fcourses%2FDLHLP20%2FTaskShort%2520%28v9%29.pdf)  
