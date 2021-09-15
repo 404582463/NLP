@@ -69,3 +69,14 @@ Output -> one class
 premise + hypothesis -> model -> contradiction(矛盾)/entailment(蕴含)/neutral(中立)
 
 ### Search Engine
+query + documents -> model -> relevance(class)
+
+### QA(question answering)
+question + Knowledge source -> model -> answer  
+knowledge usually comes from unstructured documents from search engine  
+To filter out irrelevant documents is necessary  
+Extractive QA is a reletively mature technique.
+
+### Dialogue
+chatting and task-oriented model
+
