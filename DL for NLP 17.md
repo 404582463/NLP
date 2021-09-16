@@ -83,5 +83,37 @@ chit-chatting
 input + historical conversation + personality +empathy + knowledge + ... -> model => output
 task-orientend  
 1. NLG(action defination) model is usually deployed as an independent model  
-2. Core model(policy and state tracker)
+2. Core model(policy and state tracker)  
+State tracker only concers about those info that are important to achieve the task, and the rest is ignored  
+Policy model decide what to do after known the state(rule based for simple state, ML based for complex state)
+3. NLU(natural language understanding)
+intent classification  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provide Information and so on
+slot filling  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The task is similar to POS tagging  
+&nbsp;  
+Model of a task-oriented chatbot
+![image](https://user-images.githubusercontent.com/48316842/133538393-b62f1ce2-d95a-4e0a-a373-e5416c25e0fb.png)
+(ASR is Automatic Speech Recognition; TTS is text to speech)
+
+### Knowledge Graph
+Node + Edge  
+Node: entity  
+Edge: relation  
+graph model(graph neural network), extract info to build a graph, apply graph to other tasks  
+subtasks: entity extraction(NER named entity recognition); relation extraction  
+NER has no precise defination. Generally, people, organizations and places are taken into consideration.
+
+
+## Evaluation: GLUE(General Language Understanding Evaluation)
+![image](https://user-images.githubusercontent.com/48316842/133544608-bc106480-4555-4d25-ab32-67f0b685e671.png)
+3 main aspects: Classification (Sentiment, etc.); Similarity Calculation (Paraphrase, etc.); NLI
+
+### Super GLUE
+8 subtasks, for details, click [HERE](https://super.gluebenchmark.com/)
+![image](https://user-images.githubusercontent.com/48316842/133545047-3ffa828c-70a9-4d7a-b42e-0ad814e6a4ed.png)
+![image](https://user-images.githubusercontent.com/48316842/133545069-a29b8770-234e-44ba-8a46-ffcf01389aca.png)
+
+### DecaNLP
+Generalized model is expected for 10 subtasks.
 
