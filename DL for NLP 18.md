@@ -26,3 +26,20 @@ Transformer-XL for long seqence (such as a book)
 Reformer and Longformer to reduce the complexity of self-attention
 
 ## Fine-tune
+![image](https://user-images.githubusercontent.com/48316842/133560128-295366cf-441e-40ae-bf2f-2ba6149a53b8.png)
+ review of NLP tasks:
+ Input: one sentence; multiple sentences
+ Output: one class; class for each token; copy from input; general sequence
+
+### How to deal with input (multiple sentences)
+
+### How to deal with outptu(one class; class for each token; copy from input; general sequence)
+
+
+#### General sequence
+Use a pre-train model as decoder. What we need to do is to design a task specific model as decoder. However, usually we don't have too much labeled data. Meanwhile, the decoder do not have the pretrainned knowledge. (Version 1.0)  
+Use the input sentense to generate a embedding. Then feed this embedding to the task specific model and get a new embedding (generated word). This generated embedding (word) will be the new input for the specific model to get the next embedding. In this case, the pretrained model is also used as a decoder.
+
+### How to fine-tune
+
+some tags: [SEP] <EOS>
