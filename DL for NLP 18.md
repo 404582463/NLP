@@ -43,3 +43,11 @@ Use the input sentense to generate a embedding. Then feed this embedding to the 
 ### How to fine-tune
 
 some tags: [SEP] <EOS>
+#### method 1 
+ use a fixed pre-trained model as a feature extractor, then feed extracted features to the taxk-specific model to fine-rune (only task-specific part is trained).  
+#### method 2  
+ joint pre-trained model with task-specific model to get a gigantic one. Fine-tune it and then use it for down-stream tasks.  
+ parameters in pre-trained model are not randomly initialized (whereas parameters in task-specific model are), so overfitting is reduced.  
+generally, method 2 performs better than method 1.
+ 
+### How to fine-tune gigantic model
