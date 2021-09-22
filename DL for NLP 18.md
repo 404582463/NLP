@@ -42,12 +42,27 @@ Use the input sentense to generate a embedding. Then feed this embedding to the 
 
 ### How to fine-tune
 
-some tags: [SEP] <EOS>
+Some common tags in NLP tasks: [SEP] <EOS>  
 #### method 1 
- use a fixed pre-trained model as a feature extractor, then feed extracted features to the taxk-specific model to fine-rune (only task-specific part is trained).  
+ Use a fixed pre-trained model as a feature extractor, then feed extracted features to the taxk-specific model to fine-rune (only task-specific part is trained).  
 #### method 2  
- joint pre-trained model with task-specific model to get a gigantic one. Fine-tune it and then use it for down-stream tasks.  
- parameters in pre-trained model are not randomly initialized (whereas parameters in task-specific model are), so overfitting is reduced.  
-generally, method 2 performs better than method 1.
+ Joint pre-trained model with task-specific model to get a gigantic one. Fine-tune it and then use it for down-stream tasks.  
+ Parameters in pre-trained model are not randomly initialized (whereas parameters in task-specific model are), so overfitting is reduced.  
+Generally, method 2 performs better than method 1.
  
 ### How to fine-tune gigantic model
+#### Adaptor
+We don't need to train every parameter in a model. Use extra Apt layer to limit which part to train.
+Similarly, when saving the model, we just need to save the unmodified part of the original model and those Apt layers(may be multiple for different tasks).
+
+#### Weighted features
+ Give weight to the output from each layer, then get the weighted sum.
+ The weight could be treated as parameter of task-specific model and they will be trained in the same time.
+ 
+#### Why do we fine-tune
+modle train by fine-tune method usually has lower training loss rate than train the whole model. In another word, time is saved.
+ 
+![image](https://user-images.githubusercontent.com/48316842/134266997-7857653f-f85e-46de-8f08-d6448bead141.png)
+the graph in right side is easier to generalize (the gradient of the area around the local minimum(end point) is more gentle for the right side. Generally, a basin is better than a valley)  
+ 
+ 
