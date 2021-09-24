@@ -28,3 +28,19 @@ Reinforcement is helpful with undifferentiable models.
 Give the role of "agent" in RL to Generator; role of "actions" that are taken in RL to sampled tokens.   
 Discriminator is the interactive environment and the output scalar is the final reward.  
 The problem is the environment (Discriminator model) will change at the same time which will make the training of RL much more difficult.  
+RL + GAN is disaster  
+### tips for improve the training of RL
+Use reward for every generation step (not just a final reward) to find out and locate the token that cause the low reward.
+
+## GAN for audio and text style transformer
+![image](https://user-images.githubusercontent.com/48316842/134609206-98628c5f-e47b-47a3-ac98-bb6b704898f7.png)
+The core method is to design two encoders for content and style represently.
+
+### Applications
+- text style tansfer
+- unsupervised abstractive summarization
+- unsupervised translation: mapping of wrod embeding (VecMap)
+- unsupervised ASR (Atomatic speech recognition)
+  - Aucoustic token discovery: transfer continous audio signals into descrate tokens
+  - ![image](https://user-images.githubusercontent.com/48316842/134613743-9bb45de6-64e6-48fb-98d8-dbd3b2357da6.pn
+
