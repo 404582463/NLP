@@ -1,3 +1,6 @@
+import pandas as pd
+import math
+
 class Tfidf():
   """
   Get a dataframe of tf-idf from given documents.
