@@ -1,22 +1,18 @@
-import pandas as pd
-import re
-import math
-import stopwords
-
-tf_matrix = {}
-list_of_docs = []
-
 class Tfidf():
   """
-  Get a dataframe from given documents.
+  Get a dataframe of tf-idf from given documents.
 
   Paramenters
   -----------
-  documents : a list of strings.
+  tokens : a list of strings.
     This is the tokenized documents.
 
   remove_low_frequency : Bool, default False.
-    remove tokens with low frequency or not,
+    Remove tokens with low frequency or not.
+    Low frequency words are considered as importand in tf-idf method.
+    But for some words with low frequency, for example, only apper once in documents, 
+    the importance may be considered higer than it should be and cause estimation error.
+    It depends on use to determine activate this option or not.
   
   low_term_frequency : int, default 1.
     Define what is a low frequency, and those tokens apper less than this frequency will be removed. 
@@ -33,23 +29,24 @@ class Tfidf():
 
   def __init__(
       self, 
-      path_of_docs,
-      list_of_docs,
+      document_dictionary,
       remove_low_frequency = False,
       low_term_frequency = 1
-
   ):
+    self.document_dictionary = document_dictionary
+    self.remove_low_frequency = remove_low_frequency
+    self.low_term_frequency = low_term_frequency
 
-    self.path_of_docs = path_of_docs
-    self.list_of_docs = ist_of_docs
+    matrix = {}
   
-  # calculate the term sum and term frequency in a document
-  # and return a dictionary contains these information
   def sum_and_tf(
+      self,
       tokens, 
       remove_low_frequency=False, 
       low_frequency=1
-  ):
+    ):
+    """ Calculate the sum and normalized term frequency of each token from a given documents. """
+      
     dictionary = {}
     sentence_length = len(tokens)
 
@@ -68,98 +65,65 @@ class Tfidf():
 
     return matrix
 
-  def build_tf_matrix(self.path_of_docs, self.list_of_docs):
+  def build_tf_matrix(self):
+    """
+    Calculate the term sum and term frequency in a document,
+    and return a dictionary contains these information
+    """
+
     # get documents for build the tf matrix
-    document_dictionary = get_documents(path_of_docs, list_of_docs)
+    document_dictionary = self.document_dictionary
+    tf_matrix = {}
 
     for doc_name, doc_content in document_dictionary.items():
-      tokens = sentence_tokenize(doc_content)
-      tf_matrix[doc_name] = Document(tokens).sum_and_tf()
+      tokens = doc_content
+      tf_matrix[doc_name] = self.sum_and_tf(tokens)
 
     return tf_matrix
 
-  def build_idf_matrix():
+  def build_idf_matrix(self):
     idf_matrix = dict()
+    tf_matrix = self.build_tf_matrix()
+ 
     for doc_name, doc_tf_matrix in tf_matrix.items():
-      idf_matrix[doc_name] = pd.DataFrame.from_dict(doc_tf_matrix, orient='index')
+      idf_matrix[doc_name] = doc_tf_matrix
       
     idf_matrix = pd.concat(idf_matrix, axis=1).fillna(0.0)
-    idf_matrix['idf']= 0.0
+    idf_matrix['idf'] = 0.0
+    idf_matrix['sum'] = 0
 
-    N = len(list_of_docs)
+    N = len(self.document_dictionary)
+
     for token in idf_matrix.index:
       cnt = 0
-      for doc_name in list_of_docs:
+      sum = 0
+      for doc_name in self.document_dictionary:
         if idf_matrix.loc()[token][doc_name]['sum'] != 0:
+          sum = sum + idf_matrix.loc()[token][doc_name]['sum']
           cnt = cnt + 1
-      idf_matrix['idf'][token] = math.log(N/cnt)
+    
+      idf_matrix.at[token, 'sum'] = sum
+      
+      # the denominator is set as (cnt+1) but not cnt to avoid being 0
+      # this is because for a new query, there may be words/tokens are new to the exist words/tokens dictionary
+      # then the cnt will be 0, and error occurs when calculating log(N/cnt) 
+      # this is a common method for solving such kind of issues
+      idf_matrix.at[token, 'idf'] = math.log(N/cnt)
 
     return idf_matrix
 
-  def tf_idf_matrix():
-    sum_and_tf()
-    build_tf_matrix()
-
-    tf_matrix = {**tf_matrix, **build_tf_matrix(path_of_docs, list_of_docs_new)}
-    list_of_docs = list_of_docs + list_of_docs_new
-
-    build_idf_matrix()
-    for :
-      
-
-    
+  def prune_matrix(self, tf_idf_matrix):
+    tf_idf_matrix = tf_idf_matrix
+    tf_idf_matrix = tf_idf_matrix[tf_idf_matrix['sum']>self.low_term_frequency]
     return tf_idf_matrix
 
-class TextCleaning():
-  """
-  Return a cleaned text data from raw text data.
+  def tf_idf_matrix(self):
+    tf_idf_matrix = self.build_idf_matrix()
+    for token in tf_idf_matrix.index:
+      for doc_name in self.document_dictionary:
+        tf_idf_matrix.at[token,(doc_name,'tf_idf')] = tf_idf_matrix.loc()[token][doc_name]['tf'] * tf_idf_matrix['idf'][token]
 
+    if self.remove_low_frequency == True:
+      tf_idf_matrix = self.prune_matrix(tf_idf_matrix)
 
-
-  Paramenters
-  -----------
-  documents : Strings
-    Raw text data given by user to be cleaned.
-  
-  remove_stopwords : bool, default True.
-    In NLP, stopwords are actually the most common words in any language (like articles, prepositions,
-    pronouns, conjunctions, etc) and does not add much information to the text. By activating this option,
-    stopwords will be removed. This will help to decrease the noisy in a raw text.
-
-  Examples
-  --------
-  Get tf-idf from given documents.
-
-  >>>
-
-  """
-
-  def __init__(
-      self,
-      documents,
-      remove_stopwords = True
-  ):
-
-    self.documents = documents
-    self.remove_stopwords = remove_stopwords
-
-  def sentence_tokenize(
-      sentence,
-      self.remove_stopwords
-  ):
-    # words = re.split(r"sentence|(?\s.)",sentence)
-    words = re.split('\s|\.|,',sentence)
-    tokens = words
-    
-    if remove_stopwords == True:
-      tokens = list(i for i in tokens if i.lower() not in stopwords)
-
-    # for l in range(len(words)):    
-    #   while re.match(r"^(?:,|\.|\'|'|\"|_|`|@|&|!|“|”|=|-|\+|\t|\s|\(|\)|\[|\]|\{|\}|<|>|;|:).*", words[l]):
-    #     words[l] = words[l][1:]
-    #   while re.match(r".*(?:,|\.|\'|'|\"|_|`|@|&|!|“|”|=|-|\+|\t|\s|\(|\)|\[|\]|\{|\}|<|>|;|:)$", words[l]):
-    #     words[l] = words[l][:-1]
-    #   words[l] = ss.stem(words[l])
-    #   if not re.match(r"^(?:[0-9]|\$|£|€|-|–|—).*", words[l]) and words[l] != '' and words[l] not in stopword:
-    #     token.append(words[l])
-    return tokens
+    return tf_idf_matrix
