@@ -1,5 +1,5 @@
 import re
-# import stopwords
+import stopwords
 
 class Tokenization():
   """
@@ -7,7 +7,7 @@ class Tokenization():
 
   Paramenters
   -----------
-  documents : Strings
+  documents : Strings.
     Raw text data given by user to be cleaned.
   
   remove_stopwords : bool, default True.
@@ -27,6 +27,11 @@ class Tokenization():
   >>> Tokenization(doc, case_sensetive=True).tokenize()
   ['This', 'test', 'sentence']
 
+  Get tokens without removing stopwords.
+  
+  >>> doc = "This is a test sentence"
+  >>> Tokenization(doc, remove_stopwords=False).tokenize()  
+  ['this', 'is', 'a', 'test', 'sentence']
   """
 
   def __init__(
@@ -39,22 +44,18 @@ class Tokenization():
     self.remove_stopwords = remove_stopwords
     self.case_sensetive = case_sensetive
 
-  def normalize(self):
-    normalized_documents = self.documents.lower()
+  def normalize(self, documents):
+    normalized_documents = documents.lower()
     return normalized_documents
 
-  def split(
-        self,
-        normalized_documents,
-    ):
+  def split(self, normalized_documents):
     words = re.split('\s|\.|,',normalized_documents)
-    tokens = words
+    tokens = list(word for word in words if word != '')
     return tokens
       
-
   def tokenize(self):
     if self.case_sensetive == False:
-      normalized_documents = self.normalize()
+      normalized_documents = self.normalize(self.documents)
     else:
       normalized_documents = self.documents
     
@@ -62,13 +63,5 @@ class Tokenization():
     
     if self.remove_stopwords == True:
       tokens = list(i for i in tokens if i not in stopwords)
-
-    # for l in range(len(words)):    
-    #   while re.match(r"^(?:,|\.|\'|'|\"|_|`|@|&|!|“|”|=|-|\+|\t|\s|\(|\)|\[|\]|\{|\}|<|>|;|:).*", words[l]):
-    #     words[l] = words[l][1:]
-    #   while re.match(r".*(?:,|\.|\'|'|\"|_|`|@|&|!|“|”|=|-|\+|\t|\s|\(|\)|\[|\]|\{|\}|<|>|;|:)$", words[l]):
-    #     words[l] = words[l][:-1]
-    #   words[l] = ss.stem(words[l])
-    #   if not re.match(r"^(?:[0-9]|\$|£|€|-|–|—).*", words[l]) and words[l] != '' and words[l] not in stopword:
-    #     token.append(words[l])
+      
     return tokens
